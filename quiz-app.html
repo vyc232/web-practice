@@ -7,10 +7,11 @@
 	<body>
 		<div id="header">
 			<h1>Create your quiz set</h1>
-			<div id="newQuizButton"><button id="showQuizForm">Create</button></div>
-			<div id="takeQuizButton"><button id="showTakeQuiz">Take Quiz</button></div>
+			<div id="createQuiz"><button id="createQuizButton">Create</button></div>
+			<div id="takeQuiz"><button id="takeQuizButton">Take Quiz</button></div>
 		</div>
-		<div id="createQuiz">
+		
+		<div id="quizInput">
 			<p id="questionCount">Question Count: <span id="questionCounter"></span></p>
 			<form id="newQuestionForm">
 				<input type="text" id="question" placeholder="Enter question here...">
@@ -18,11 +19,19 @@
 				<input type="submit" id="addQuestion" value="Add">
 				<p id="no-input"></p>
 			</form>
-			<ol id="inputList"></ol>			
+			<ol id="inputList">
+				<li><p id="question">car</p><p id="answer">automobile</p></li>
+				<li><p id="question">kid</p><p id="answer">small human</p></li>
+			</ol>			
 		</div>
+  		
    		<div id="doQuiz">
+   			<p id="questionsLeft">Questions Left: <span id="questionsLeftCounter"></span></p>
    			<ul id="questionList"></ul>
+   			<p id="wrong-answer"></p>
    		</div>
+   		
+   		
     	<script src="jquery-3.1.1.js"></script>
     	<script src="quiz-app.js"></script>			
 	</body>
