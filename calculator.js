@@ -63,6 +63,7 @@ $(function () {
 			}
 		}
 	}
+	//Prints the operator if no previous operator
 	function printOperator(operator, lastChar, oldText){
 		if(checkOperator(lastChar)){
 			var withoutPrevOperator = oldText.substring(0, oldText.length - 1);

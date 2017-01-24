@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Quiz Application</title>
+		<link rel="stylesheet" href="quiz-app.css">
+	</head>	
+	<body>
+		<div id="header">
+			<h1>Create your quiz set</h1>
+			<div id="newQuizButton"><button id="showQuizForm">Create</button></div>
+			<div id="takeQuizButton"><button id="showTakeQuiz">Take Quiz</button></div>
+		</div>
+		<div id="createQuiz">
+			<p id="questionCount">Question Count: <span id="questionCounter"></span></p>
+			<form id="newQuestionForm">
+				<input type="text" id="question" placeholder="Enter question here...">
+				<input type="text" id="answer" placeholder="Enter answer here...">
+				<input type="submit" id="addQuestion" value="Add">
+				<p id="no-input"></p>
+			</form>
+			<ol id="inputList"></ol>			
+		</div>
+   		<div id="doQuiz">
+   			<ul id="questionList"></ul>
+   		</div>
+    	<script src="jquery-3.1.1.js"></script>
+    	<script src="quiz-app.js"></script>			
+	</body>
+</html>
+
+
+<!--
+TODO: USE AJAX TO ALLOW USER TO SELECT MULTIPLE CHOICE OR FREE RESPONSE
+		THEN BRING UP ALL THE OPTIONS FOR EITHER-->
