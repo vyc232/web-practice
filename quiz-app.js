@@ -1,5 +1,5 @@
 // WHAT I LEARNED
-// EVENT DELEGATION, CALLBACK FUNCTIONS, 
+// EVENT DELEGATION, CALLBACK FUNCTIONS, USING FILTERS ON JQUERY OBJECTS WITH FIND, SELECTING VARIOUS ELEMENTS IN THE DOM TREE
 
 $(function(){
 	var map = {
@@ -54,10 +54,19 @@ $(function(){
 		for(var i = 0; i < questionsArray.length; i++){
 			// Wrap every question box with a div
 			var $answerDiv = $("<div class=\"answerWrapper\"></div>");
-			$answerDiv.append("<p id=\"answerBoxQuestion\">" + questionsArray[i] + "</p>");
-			// The answer form
-			$answerDiv.append("<form class=\"answerForm\"><input type=\"text\" class=\"answerbox\" placeholder=\"Answer\"><input type=\"submit\" class=\"answerQuestion\" value=\"Check Answer\"></form>");
-			$answerDiv.append("<p class=\"wrong-answer\"></p>");
+			var $question = $("<p class=\"answerBoxQuestion\">" + questionsArray[i] + "</p>");
+			var $form = $("<form class=\"answerForm\"></form>");
+			var $input1 = $("<input type=\"text\" class=\"answerBox\" placeholder=\"Answer\">");
+			var $input2 = $("<input type=\"submit\" class=\"answerQuestion\" value=\"Check Answer\">");
+			var $wrongAnswer = $("<p class=\"wrong-answer\"></p>");
+			
+			$form.append($input1);
+			$form.append($input2);
+			$form.append($wrongAnswer);
+			
+			$answerDiv.append($question);
+			$answerDiv.append($form);
+			
 			$doQuiz.append($answerDiv);
 		}
 		updateSubtractingCount();
@@ -65,7 +74,8 @@ $(function(){
 	
 	// Driver for the quiz taking
 	function runQuiz(){
-		var $questionBoxes = $(".answerWrapper");		
+		var $questionBoxes = $(".answerWrapper");
+		$questionBoxes.find(":input.answerBox").first().focus();
 
 		// SHOW ALL OF THE QUESTIONS AND HIDE WHEN THE QUESTION IS COMPLETED
 		// OR HIDE AN INCORRECTLY ANSWERED QUESTION AND APPEND IT TO THE END
@@ -73,26 +83,33 @@ $(function(){
 			e.preventDefault();
 			var $this = $(this);
 			
-			var answerBoxQuestion = $this.find("#answerBoxQuestion").text();
+			var answerBoxQuestion = $this.find(".answerBoxQuestion").text();
 			console.log("Question: " + answerBoxQuestion);
-			var $answerAttempt = $this.find(".answerbox");
-			console.log("Answer Attempt: " + $answerAttempt.val());
+			var $answerBox = $this.find(".answerBox");
+			console.log("Answer Attempt: " + $answerBox.val());
 			var correctAnswer = map[answerBoxQuestion];
 			console.log("Correct Answer: " + correctAnswer);
-			if($answerAttempt.val() === correctAnswer){
+			if($answerBox.val() === correctAnswer){
 				console.log("Right Answer!!");
 				$this.hide(); // OR POSSIBLY $this.remove()
+				// Focus on the next question's answer box
+				$questionBoxes.next().find(":input.answerBox").focus();				
 			}else{
 				$this.find(".wrong-answer").text("Wrong answer");
 				console.log("Wrong answer!!");
-				$answerAttempt.val("");
-				$answerAttempt.focus();
+				$answerBox.val("");
+				$answerBox.focus();
 			}
 			
 			//Removes wrong answer text on keydown
 			$this.find(".answerForm").on("keydown", function(){
 				$this.find(".wrong-answer").text("");
-			});	
+			});
+			
+			
+//			console.log($questionBoxes.html());
+//			console.log($questionBoxes.next().html());
+//			console.log($questionBoxes.next().find(":first-child").next().html());
 		});
 
 	}
