@@ -75,6 +75,7 @@ $(function(){
 	// Driver for the quiz taking
 	function runQuiz(){
 		var $questionBoxes = $(".answerWrapper");
+		console.log($questionBoxes.length);
 		$questionBoxes.find(":input.answerBox").first().focus();
 
 		// SHOW ALL OF THE QUESTIONS AND HIDE WHEN THE QUESTION IS COMPLETED
@@ -91,9 +92,9 @@ $(function(){
 			console.log("Correct Answer: " + correctAnswer);
 			if($answerBox.val() === correctAnswer){
 				console.log("Right Answer!!");
-				$this.hide(); // OR POSSIBLY $this.remove()
+				$this.remove(); // OR POSSIBLY $this.remove()
 				// Focus on the next question's answer box
-				$questionBoxes.next().find(":input.answerBox").focus();				
+				$questionBoxes.find(":input.answerBox").first().focus();				
 			}else{
 				$this.find(".wrong-answer").text("Wrong answer");
 				console.log("Wrong answer!!");
@@ -106,15 +107,13 @@ $(function(){
 				$this.find(".wrong-answer").text("");
 			});
 			
+			//TODO: TARGETING ADDED QUESTIONS WITH FOCUS DOESN'T WORK
 			
-//			console.log($questionBoxes.html());
-//			console.log($questionBoxes.next().html());
-//			console.log($questionBoxes.next().find(":first-child").next().html());
+			
 		});
 
 	}
 
-		
 	$newQuestionForm.on("submit", function(e){
 		e.preventDefault();
 		var noQuestion, noAnswer;
@@ -141,7 +140,7 @@ $(function(){
 			// Display the added question/answer
 			$inputList.append("<li><p id=\"question\">" + questionText + "</p><p id=\"answer\">" + answerText + "</p></li>");
 			// Add the key/value pair to the map
-			map.questionText = answerText;
+			map[questionText] = answerText;
 			// Add the question to the questionArray
 			questionsArray.push(questionText);
 			$question.val("");
