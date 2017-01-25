@@ -1,3 +1,6 @@
+// WHAT I LEARNED
+// EVENT DELEGATION, CALLBACK FUNCTIONS, 
+
 $(function(){
 	var map = {
 		"car": "automobile",
@@ -18,13 +21,13 @@ $(function(){
 	var $doQuiz = $("#doQuiz");
 	var $takeQuiz = $("#takeQuiz");
 	var $questionList = $("#questionList");
-
+	
 	updateAddingCount();
 	
 	$createQuiz.show();
 	$newQuestionForm.hide();
 	$doQuiz.hide();
-	
+		
 	$("#createQuizButton").on("click", function(){
 		$createQuiz.hide();
 		$newQuestionForm.show();
@@ -39,26 +42,61 @@ $(function(){
 		$questionList.hide();
 		transferQAndA();
 		buildTakeQuiz();
+		for(var i = 0; i < questionsArray.length; i++){
+			console.log("questionsArray[" + i + "]: " + questionsArray[i]);			
+		}		
 		console.log("RUNNING QUIZ");
 		runQuiz();
 	});
-	
-	// Driver for the quiz taking
-	function runQuiz(){
-		var $answerBox = $("#answerbox");
-		var $wrongAnswer = $("#wrong-answer");		
-	}
-	
+
+		
 	function buildTakeQuiz(){
-		for(i = 0; i < questionsArray.length; i++){
+		for(var i = 0; i < questionsArray.length; i++){
 			// Wrap every question box with a div
-			var $answerDiv = $doQuiz.append("<div class=\"answerwrapper\"></div>")
+			var $answerDiv = $("<div class=\"answerWrapper\"></div>");
 			$answerDiv.append(questionsArray[i]);
 			// The answer form
-			$answerDiv.append("<form id=\"answerForm\"><input type=\"text\" id=\"answerbox\" placeholder=\"Answer\"><input type=\"submit\" id=\"answerQuestion\" value=\"Check Answer\"></form>");				
+			$answerDiv.append("<form class=\"answerForm\"><input type=\"text\" class=\"answerbox\" placeholder=\"Answer\"><input type=\"submit\" class=\"answerQuestion\" value=\"Check Answer\"></form>");
+			$doQuiz.append($answerDiv);
 		}
 		updateSubtractingCount();
 	}
+	
+	// Driver for the quiz taking
+	function runQuiz(){
+		var $questionBoxes = $(".answerWrapper");
+		$questionBoxes.each(function(){
+			$(this).hide();
+		});
+		// Show the first question
+		var index = 0;
+		var $firstQuestion = $($questionBoxes.get(0));
+		$firstQuestion.show();
+			
+		var $currentAnswerForm = $firstQuestion.find(".answerForm");
+		
+		$currentAnswerForm.on("submit", function(e){
+			e.preventDefault();
+			var $answerAttempt = $firstQuestion.find(".answerbox");
+			
+			console.log("Answer Attempt: " + $answerAttempt.val());
+			console.log("Question: " + questionsArray[0]);
+			var mappedQuestion = questionsArray[0];
+			console.log("Correct Answer: " + map[mappedQuestion]);
+			if($answerAttempt.val() === map[mappedQuestion]){
+				console.log("Correct Answer!");
+			}
+		});
+		
+
+//		while(index < questionsArray.length){
+//			var $answerAttempt = $($questionBoxes.get(index).firstChild);
+//			console.log($answerAttempt.val());
+//			index++;
+//		}
+	}
+	
+
 
 	
 //	Show the first question, when the user hits answer and its correct, then replace the question with a new one
@@ -132,10 +170,6 @@ $(function(){
 	function transferQAndA(){
 		$inputList.children().each(function(){
 			$questionList.append($(this));
-		});
-		console.log("showing $questionList")
-		$questionList.children().each(function(){
-			console.log($(this).text());
 		});
 	}
 
