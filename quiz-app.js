@@ -41,11 +41,7 @@ $(function(){
 		$("#doQuiz").show();
 		$questionList.hide();
 		transferQAndA();
-		buildTakeQuiz();
-		for(var i = 0; i < questionsArray.length; i++){
-			console.log("questionsArray[" + i + "]: " + questionsArray[i]);			
-		}		
-		console.log("RUNNING QUIZ");
+		buildTakeQuiz();	
 		runQuiz();
 	});
 
@@ -75,7 +71,6 @@ $(function(){
 	// Driver for the quiz taking
 	function runQuiz(){
 		var $questionBoxes = $(".answerWrapper");
-		console.log($questionBoxes.length);
 		$questionBoxes.find(":input.answerBox").first().focus();
 
 		// SHOW ALL OF THE QUESTIONS AND HIDE WHEN THE QUESTION IS COMPLETED
@@ -92,7 +87,8 @@ $(function(){
 			console.log("Correct Answer: " + correctAnswer);
 			if($answerBox.val() === correctAnswer){
 				console.log("Right Answer!!");
-				$this.remove(); // OR POSSIBLY $this.remove()
+				$this.remove();
+				updateSubtractingCount();
 				// Focus on the next question's answer box
 				$questionBoxes.find(":input.answerBox").first().focus();				
 			}else{
@@ -106,9 +102,6 @@ $(function(){
 			$this.find(".answerForm").on("keydown", function(){
 				$this.find(".wrong-answer").text("");
 			});
-			
-			//TODO: TARGETING ADDED QUESTIONS WITH FOCUS DOESN'T WORK
-			
 			
 		});
 
@@ -138,7 +131,7 @@ $(function(){
 			var answerText = $answer.val();
 			console.log("question: " + questionText + " answer: " + answerText);
 			// Display the added question/answer
-			$inputList.append("<li><p id=\"question\">" + questionText + "</p><p id=\"answer\">" + answerText + "</p></li>");
+			$inputList.append("<li><p id=\"questionAdded\">" + questionText + "</p><p id=\"answerAdded\">" + answerText + "</p></li>");
 			// Add the key/value pair to the map
 			map[questionText] = answerText;
 			// Add the question to the questionArray
@@ -171,7 +164,7 @@ $(function(){
 		
 	// Used when the quiz is being taken
 	function updateSubtractingCount(){
-		var count = $questionList.children().length;
+		var count = $(".answerWrapper").find(":input.answerBox").length;
 		$("#questionsLeftCounter").text(count);		
 	}
 	
@@ -183,5 +176,4 @@ $(function(){
 		});
 	}
 
-		
 });
