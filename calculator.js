@@ -18,7 +18,6 @@ $(function () {
 		} else {
 			$this.on("click", function () {
 				var oldText = $result.text();
-//				console.log(oldText.charAt(oldText.length - 1));				
 				addValue($this);
 			});
 		}
@@ -80,7 +79,7 @@ $(function () {
 	}
 	//Hightlights the clicked operator
 	function operatorHighlight(value){
-		value.css({"border": "1.4px solid black"});
+		value.css({"border": "2px solid black"});
 	}
 	//Removes the highlighting of the chosen operator
 	function removeOperatorHighlight(){
