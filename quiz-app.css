@@ -16,7 +16,7 @@ h1{
 	text-align: center;
 	margin-bottom: 10px;
 }
-#quizInput, #header, #newQuestionForm{
+#quizInput, #header, #newQuestionForm, #doQuiz, .answerWrapper{
 	min-width: 800px;
 }
 #newQuestionForm{
@@ -77,8 +77,14 @@ button, #addQuestion{
 button:active, #addQuestion:active{
 	background-color: darkgray;
 }
+
+/*CSS FOR TAKING THE QUIZ*/
+#questionsLeft{
+	margin-top: 50px;
+}
 .answerWrapper{
 	margin: auto;
+	margin-top: 15px;
 	left: 0;
 	right: 0;	
 	position: absolute;
@@ -89,6 +95,14 @@ button:active, #addQuestion:active{
 #doQuiz > .answerWrapper ~ .answerWrapper{
 	visibility: hidden;
 }
+
+.answerBoxQuestion, .wrong-answer{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
 #spacer{
 	padding-top: 100px;
 }
+
+

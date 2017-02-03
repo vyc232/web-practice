@@ -24,24 +24,34 @@ $(function(){
 	
 	updateAddingCount();
 	
-	$createQuiz.show();
 	$newQuestionForm.hide();
-	$doQuiz.hide();
+	$doQuiz.hide();	
+	$createQuiz.show();
+
 		
 	$("#createQuizButton").on("click", function(){
 		$createQuiz.hide();
-		$newQuestionForm.show();
+		$newQuestionForm.fadeIn("slow");
 		$question.focus();
 	});
 	
 	$("#takeQuizButton").on("click", function(){
-		$quizInput.hide();
-		$createQuiz.hide();
-		$takeQuiz.hide();
-		$("#doQuiz").show();
-		$questionList.hide();
+		$takeQuiz.fadeOut(100);
+		$createQuiz.fadeOut(100);		
+		$quizInput.fadeOut(100);
+		$questionList.fadeOut(100, function(){
+			$("#doQuiz").fadeIn("slow");
+		});
+		$("h1").fadeOut(100, function(){
+			$("h1").text("Take your quiz").fadeIn(110);
+		});
+//		$takeQuiz.hide();
+//		$createQuiz.hide();		
+//		$quizInput.hide();
+//		$questionList.hide();
+		$("#doQuiz").fadeIn("slow");
 		transferQAndA();
-		buildTakeQuiz();	
+		buildTakeQuiz();
 		runQuiz();
 	});
 
@@ -78,6 +88,7 @@ $(function(){
 		$questionBoxes.on("submit", function(e){
 			e.preventDefault();
 			var $this = $(this);
+			$this.focus();
 			
 			var answerBoxQuestion = $this.find(".answerBoxQuestion").text();
 			console.log("Question: " + answerBoxQuestion);
@@ -90,7 +101,7 @@ $(function(){
 				$this.remove();
 				updateSubtractingCount();
 				// Focus on the next question's answer box
-				$questionBoxes.find(":input.answerBox").first().focus();				
+				$questionBoxes.find(":input.answerBox").first().focus();
 			}else{
 				$this.find(".wrong-answer").text("Wrong answer");
 				console.log("Wrong answer!!");
@@ -106,6 +117,8 @@ $(function(){
 		});
 
 	}
+	
+	//TODO: FIX SHOW OF THE #DO QUIZ FOR FOCUS
 
 	$newQuestionForm.on("submit", function(e){
 		e.preventDefault();
