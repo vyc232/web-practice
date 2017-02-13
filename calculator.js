@@ -7,6 +7,7 @@ $(function () {
 	//Clear button
 	$clearButton.on("click", function () {
 		$result.text('');
+		removeOperatorHighlight();
 	});
 	//All buttons
 	$allButtons.each(function () {
@@ -35,22 +36,30 @@ $(function () {
 		if (value.text() === "+") {
 			removeOperatorHighlight();
 			operatorHighlight(value);
-			printOperator("+", lastChar, oldText)
+			if(oldText !== ""){
+				printOperator("+", lastChar, oldText);
+			}
 			equalTapped = false;
 		} else if (value.text() === "-") {
 			removeOperatorHighlight();			
 			operatorHighlight(value);
-			printOperator("-", lastChar, oldText)
+			if(oldText !== ""){
+				printOperator("-", lastChar, oldText);
+			}
 			equalTapped = false;
 		} else if (value.text() === "/") {
 			removeOperatorHighlight();			
 			operatorHighlight(value);
-			printOperator("/", lastChar, oldText)
+			if(oldText !== ""){
+				printOperator("/", lastChar, oldText);
+			}
 			equalTapped = false;
 		} else if (value.text() === "*") {
 			removeOperatorHighlight();			
 			operatorHighlight(value);
-			printOperator("*", lastChar, oldText)
+			if(oldText !== ""){
+				printOperator("*", lastChar, oldText);
+			}
 			equalTapped = false;
 		} else {
 			removeOperatorHighlight();			
